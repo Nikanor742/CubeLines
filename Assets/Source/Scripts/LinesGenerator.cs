@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LinesGenerator : MonoBehaviour
 {
+    [SerializeField][Range(2,8)] private float fieldWidth;
     [SerializeField] private LineConfiguration[] lines;
 
 
@@ -16,7 +17,9 @@ public class LinesGenerator : MonoBehaviour
     {
         for (int i = 0; i < lines.Length; i++)
         {
-            Instantiate(lines[i].LinePrefab, Vector3.zero, Quaternion.identity).Init(
+            float startPos = -(fieldWidth / 2);
+            Vector3 linePosition = new Vector3(startPos, 0, 0);
+            Instantiate(lines[i].LinePrefab, linePosition, Quaternion.identity).Init(
                 lines[i].LineColor,
                 lines[i].PointsOffset,
                 lines[i].PointsCount,

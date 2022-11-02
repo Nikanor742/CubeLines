@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Line : MonoBehaviour
@@ -42,9 +43,8 @@ public class Line : MonoBehaviour
         {
             Vector3 randomPosition = new Vector3(Random.Range(-1, 2), 0, i * pointsOffset);
 
-            linePoints.Add(Instantiate(pointPrefab, randomPosition, Quaternion.identity).transform);
-            linePoints[i].parent = transform;
-
+            linePoints.Add(Instantiate(pointPrefab, transform).transform);
+            linePoints.Last().localPosition = randomPosition;
             lineRenderer.SetPosition(i, linePoints[i].position);
             if (i == 0 || i == pointsCount - 1)
             {
