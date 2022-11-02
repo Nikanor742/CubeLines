@@ -8,8 +8,23 @@ public class Point : MonoBehaviour
     private Camera mainCamera;
     private MeshRenderer meshRenderer;
 
+    private float prevPointPositionZ;
+    private float nextPointPositionZ;
+    private bool movable = true;
     private bool onHover;
     
+    public void SetPrevPointPositionZ(float z)
+    {
+        prevPointPositionZ = z;
+    }
+    public void SetNextPointPositionZ(float z)
+    {
+        nextPointPositionZ = z;
+    }
+    public void SetMovableState(bool state)
+    {
+        movable = state;
+    }
 
     private void Start()
     {
@@ -20,25 +35,28 @@ public class Point : MonoBehaviour
     private void OnMouseDown()
     {
         onHover = true;
-        meshRenderer.material.color = Color.yellow;
+        if(movable)
+            meshRenderer.material.color = Color.yellow;
     }
 
     private void OnMouseUp()
     {
         onHover = false;
-        meshRenderer.material.color = Color.white;
+        if (movable)
+            meshRenderer.material.color = Color.white;
     }
 
     private void Update()
     {
-        if (onHover)
+        if (movable && onHover)
         {
             Vector3 newPos = mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y,
                 mainCamera.transform.position.y));
             newPos.y = 0;
 
-            transform.position = newPos;
+            if(newPos.z < nextPointPositionZ && newPos.z > prevPointPositionZ)
+                transform.position = newPos;
         }
     }
 }
