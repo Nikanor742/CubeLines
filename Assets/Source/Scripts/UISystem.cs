@@ -35,7 +35,7 @@ public class UISystem : MonoBehaviour
 
     private void SetLevelText()
     {
-        levelText.text = "LEVEL " + PlayerPrefs.GetInt("Level", 1);
+        levelText.text = "спнбемэ " + PlayerPrefs.GetInt("LevelUI", 1);
     }
 
     IEnumerator TimeToShowFailScreen()

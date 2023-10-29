@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class LinesGenerator : MonoBehaviour
 {
-    [SerializeField][Range(2,8)] private float fieldWidth;
+    public static LinesGenerator Instance { get; private set; }
     [SerializeField] private LineConfiguration[] lines;
 
-
-    private void Start()
+    private void Awake()
     {
-        GenerateLevel();
+        Instance = this;
     }
 
-    private void GenerateLevel()
+    public void GenerateLevel(int linesCount,int pointsInLine,float fieldWidth)
     {
-        for (int i = 0; i < lines.Length; i++)
+        for (int i = 0; i < linesCount; i++)
         {
             float startPos = -(fieldWidth / 2);
-            Vector3 linePosition = new Vector3(startPos + (i * (fieldWidth / lines.Length)), 0, 0);
+            Vector3 linePosition = new Vector3(startPos + (i * (fieldWidth / linesCount)), 0, 0);
             Instantiate(lines[i].LinePrefab, linePosition, Quaternion.identity).Init(
                 lines[i].CubeColor,
                 lines[i].LineColor,
                 lines[i].MoveTime,
                 lines[i].PointsHeightOffset,
                 lines[i].PointsMaxRandomWidth,
-                lines[i].PointsCount,
+                pointsInLine,
                 lines[i].PointPrefab,
                 lines[i].CubePrefab,
                 lines[i].CollisionFX);

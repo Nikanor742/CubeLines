@@ -43,7 +43,10 @@ public class Cube : MonoBehaviour
             cubePath[i].SetMovableState(false);
             path[i] = cubePath[i].transform.position;
         }
-        transform.DOPath(path, moveTime, PathType.CatmullRom).OnComplete(()=> 
+        transform.DOPath(path, moveTime, PathType.CatmullRom).OnWaypointChange((int point) =>
+        {
+            cubePath[point].fx.Play();
+        }).OnComplete(()=> 
         {
             endPointReachedSignal?.Dispatch();
         });

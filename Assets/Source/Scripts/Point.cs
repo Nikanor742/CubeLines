@@ -12,6 +12,8 @@ public class Point : MonoBehaviour
     private float nextPointPositionZ;
     private bool movable = true;
     private bool onHover;
+
+    [HideInInspector] public ParticleSystem fx;
     
     public void SetPrevPointPositionZ(float z)
     {
@@ -30,20 +32,28 @@ public class Point : MonoBehaviour
     {
         meshRenderer = GetComponent<MeshRenderer>();
         mainCamera = Camera.main;
+        fx = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnMouseDown()
     {
         onHover = true;
-        if(movable)
-            meshRenderer.material.color = Color.yellow;
+        if (movable)
+        {
+            meshRenderer.material.color = Color.white;
+            
+        }
+            
     }
 
     private void OnMouseUp()
     {
         onHover = false;
         if (movable)
-            meshRenderer.material.color = Color.white;
+        {
+            meshRenderer.material.color = Color.black;
+            fx.Play();
+        } 
     }
 
     private void Update()
